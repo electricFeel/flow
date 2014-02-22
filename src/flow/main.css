@@ -1,0 +1,34 @@
+/* Colors */
+/* Line width */
+body {
+  font: 100% Helvetica, sans-serif;
+  background-color: #343d46;
+}
+
+.state {
+  stroke: #ebcb8b;
+  stroke-width: 1;
+  fill: #2b303b;
+}
+
+.port {
+  fill: #bf616a;
+  stroke-width: 1;
+  stroke: #ebcb8b;
+}
+
+#dragLine {
+  stroke: #ebcb8b;
+  stroke-width: 2;
+  stroke-dasharray: 3,3;
+}
+
+.connector {
+  stroke: #a3be8c;
+  stroke-width: 2;
+  fill: none;
+}
+
+#canvas {
+  background-color: #343d46;
+}

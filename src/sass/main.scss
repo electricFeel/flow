@@ -1,0 +1,54 @@
+$font-stack:    Helvetica, sans-serif;
+
+/* Colors */
+$primary-color: #343d46;
+$foreground-color: #c0c5ce;
+$connection-color: #b48ead;
+$port-color: #bf616a;
+$text-color: #ebcb8b;
+$support-color: #96b5b4;
+$constant-color: #a3be8c;
+$integer-color: #d08770;
+$attribute-color: #8fa1b3;
+$ignore-color: #4f5b66;
+$embedded-color: #ab7967;
+$invalid-color: #2b303b;
+/* Line width */
+$state-line-width: 1;
+$port-line-width: 1;
+$connector-line-width: 2;
+
+
+body {
+  font: 100% $font-stack;
+  background-color: $primary-color;
+}
+
+.state {
+    stroke: $text-color;
+    stroke-width: $state-line-width;
+    fill: $invalid-color;
+
+}
+
+.port {
+    fill: $port-color;
+    stroke-width: $port-line-width;
+    stroke: $text-color
+}
+
+#dragLine{
+	stroke: $text-color;
+	stroke-width: 2;
+	stroke-dasharray: 3,3;
+}
+
+.connector{
+	stroke: $constant-color;
+	stroke-width: $connector-line-width;
+	fill: none;
+}
+
+#canvas{
+	background-color: $primary-color
+}
