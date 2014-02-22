@@ -26,14 +26,22 @@ define(["Stapes", "lodash", "models/port", "models/connection", "views/portView"
                 this.constructElement(renderer);
             },
             constructElement: function(renderer) {
-                this.el = renderer.path(this.buildPath()).attr({"class": "connector"});
+                this.el = renderer.path(this.buildPath()).attr({
+                    "class": "connector"
+                });
                 //add listeners to the ports attached
                 this.toPortView.on("moved", this.redraw, this);
                 this.fromPortView.on("moved", this.redraw, this);
             },
             buildPath: function() {
-                var startLocation = {x: Number(this.fromPortView.el.attr("cx")), y: Number(this.fromPortView.el.attr("cy"))};
-                var endLocation = {x: Number(this.toPortView.el.attr("cx")), y: Number(this.toPortView.el.attr("cy"))};
+                var startLocation = {
+                    x: Number(this.fromPortView.circle.attr("cx")),
+                    y: Number(this.fromPortView.circle.attr("cy"))
+                };
+                var endLocation = {
+                    x: Number(this.toPortView.circle.attr("cx")),
+                    y: Number(this.toPortView.circle.attr("cy"))
+                };
 
                 function computeTangentOffset(pt1, pt2) {
                     return (pt2.x - pt1.x) / 2;
@@ -62,9 +70,10 @@ define(["Stapes", "lodash", "models/port", "models/connection", "views/portView"
 
                 return retPath;
             },
-            redraw: function(scope){
-                console.log("redrawing");
-                this.el.attr({"d": this.buildPath()});
+            redraw: function(scope) {
+                this.el.attr({
+                    "d": this.buildPath()
+                });
             }
         });
 

@@ -26,9 +26,29 @@ require(['lodash',
         'snap',
         'views/workspaceView',
         'models/state',
-        'models/connection'
+        'models/connection',
+        'jquery'
     ],
-    function(_, Snap, WorkspaceView, State, Connection) {
+    function(_, Snap, WorkspaceView, State, Connection, $) {
+        String.prototype.width = function(font) {
+            var f = font || '12px arial',
+                o = $('<div>' + this + '</div>')
+                    .css({
+                        'position': 'absolute',
+                        'float': 'left',
+                        'white-space': 'nowrap',
+                        'visibility': 'hidden',
+                        'font': f,
+                        //'font-size': 'xx-small'
+                    })
+                    .appendTo($('body')),
+                w = o.width();
+
+            o.remove();
+
+            return w;
+        }
+
         window.flow = {};
         //console.log(zoomPan);
         //Snap.plugin(zoomPan);
@@ -69,7 +89,9 @@ require(['lodash',
                 direction: "out",
                 text: "multiplied number",
                 outputType: "string"
-            }]
+            }],
+            x: 100,
+            y: 150
         }
 
         window.s = new flow.State(stateDef);

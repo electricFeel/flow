@@ -11,22 +11,27 @@ define(["Stapes", "lodash", "models/port", "models/connection"],
                 }
             },
             constructElement: function(renderer, xPosition, yPosition) {
-                this.el = renderer.circle(xPosition, yPosition, this.radius);
+                this.circle = renderer.circle(xPosition, yPosition, this.radius);
+                this.circle.attr({
+                    "class": this.model.def.cssClass || "port"
+                })
+                this.el = renderer.g();
                 this.el.attr({
                     "data-direction": this.model.direction,
                     "data-guid": this.model._guid,
-                    "class": this.model.def.cssClass || "port"
                 });
                 this.el.data("view", this);
+                this.el.add(this.circle);
                 this.attachEvents();
+                this.renderText(renderer);
             },
             attachEvents: function() {},
             move: function(xPosition, yPosition) {
-                this.el.attr({
+                this.circle.attr({
                     "cx": xPosition,
                     "cy": yPosition
                 });
-                console.log("moving");
+                this.updateTextLocation();
                 this.emit("moved");
             }
         });
@@ -49,7 +54,7 @@ define(["Stapes", "lodash", "models/port", "models/connection"],
                     this.emit("hoverout", this);
                 }
 
-                this.el.hover(onHoverIn, onHoverOut, this, this);
+                this.circle.hover(onHoverIn, onHoverOut, this, this);
             },
             getConnectorPoint: function() {
                 var x = Number(this.el.attr("cx")) - Number(this.el.attr("r")) - 2;
@@ -58,6 +63,28 @@ define(["Stapes", "lodash", "models/port", "models/connection"],
                     x: x,
                     y: y
                 };
+            },
+            renderText: function(renderer) {
+                var text = this.model.def.text;
+                var textEl = renderer.text(10, 10, text).attr({
+                    "class": "input-text"
+                });
+                this.textel = textEl;
+                if (this.textel) {
+                    this.textel.attr({
+                        "y": Number(this.circle.attr("cy")) + Number(this.circle.attr("r")) / 2,
+                        "x": Number(this.circle.attr("cx")) + 8
+                    });
+                }
+                this.el.add(this.textel);
+            },
+            updateTextLocation: function() {
+                if (this.textel) {
+                    this.textel.attr({
+                        "y": Number(this.circle.attr("cy")) + Number(this.circle.attr("r")) / 2,
+                        "x": Number(this.circle.attr("cx")) + 8
+                    });
+                }
             }
         });
         var OutPortView = PortView.subclass({
@@ -86,20 +113,43 @@ define(["Stapes", "lodash", "models/port", "models/connection"],
                 var onDragEnd = function() {
                     this.emit("dragending");
                 }
-                this.el.drag(onDrag, onDragStart, onDragEnd, this, this, this);
+                this.circle.drag(onDrag, onDragStart, onDragEnd, this, this, this);
             },
             getConnectorPoint: function() {
-                var x = Number(this.el.attr("cx"));
-                var y = Number(this.el.attr("cy"));
+                var x = Number(this.circle.attr("cx"));
+                var y = Number(this.circle.attr("cy"));
                 return {
                     x: x,
                     y: y
                 };
+            },
+            renderText: function(renderer) {
+                var text = this.model.def.text;
+                var textEl = renderer.text(10, 10, text).attr({
+                    "class": "output-text"
+                });
+                this.textel = textEl;
+                var bounds = this.textel.getBBox();
+                if (this.textel) {
+                    this.textel.attr({
+                        "y": Number(this.circle.attr("cy")) + Number(this.circle.attr("r")) / 2,
+                        "x": Number(this.circle.attr("cx")) - bounds.w - 8
+                    });
+                }
+                this.el.add(this.textel);
+            },
+            updateTextLocation: function() {
+                if (this.textel) {
+                    var bounds = this.textel.getBBox();
+                    this.textel.attr({
+                        "y": Number(this.circle.attr("cy")) + Number(this.circle.attr("r")) / 2,
+                        "x": Number(this.circle.attr("cx")) - bounds.w - 8
+                    });
+                }
             }
         });
         return {
             InPortView: InPortView,
             OutPortView: OutPortView
         }
-    }
-);
+    });

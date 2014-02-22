@@ -26,6 +26,17 @@ define(["Stapes", "models/state", "views/PortView"], function(Stapes, State, Por
             //renders the view
             if (!this.el) {
                 //we need to create the element
+                if (!xPosition) {
+                    if (this.model.def.x) {
+                        xPosition = Number(this.model.def.x);
+                    }
+                }
+
+                if (!yPosition) {
+                    if (this.model.def.y) {
+                        yPosition = Number(this.model.def.y);
+                    }
+                }
                 this.constructElement(renderer, xPosition, yPosition);
             }
         },
@@ -37,11 +48,22 @@ define(["Stapes", "models/state", "views/PortView"], function(Stapes, State, Por
 
             var maxLen = Math.max(this.outPortViews.length, this.inPortViews.length);
             var height = (maxLen * 25);
+            var maxLeft = 0;
+            _.forEach(this.inPortViews, function(port) {
+                maxLeft = Math.max(maxLeft, port.model.def.text.width('Helvetica, sans-serif'));
+            });
+
+            var maxRight = 0;
+            _.forEach(this.inPortViews, function(port) {
+                maxRight = Math.max(maxRight, port.model.def.text.width('Helvetica, sans-serif'));
+            });
+
+
             var rect = renderer.rect().attr({
                 "class": this.model.def.cssClass || "state",
                 "x": xPosition || 10,
                 "y": yPosition || 10,
-                "width": this.model.def.width || 50,
+                "width": maxLeft + maxRight || this.model.def.width,
                 "height": height,
                 "rx": 5,
                 "ry": 5,
@@ -95,9 +117,9 @@ define(["Stapes", "models/state", "views/PortView"], function(Stapes, State, Por
                     "original-y": rect.attr("y"),
                 })
                 _.forEach(portViews, function(port) {
-                    port.el.attr({
-                        "original-x": port.el.attr("cx"),
-                        "original-y": port.el.attr("cy")
+                    port.circle.attr({
+                        "original-x": port.circle.attr("cx"),
+                        "original-y": port.circle.attr("cy")
                     })
                 })
                 //todo: stop all animations
@@ -110,7 +132,7 @@ define(["Stapes", "models/state", "views/PortView"], function(Stapes, State, Por
                     "original-y": ""
                 })
                 _.forEach(portViews, function(port) {
-                    port.el.attr({
+                    port.circle.attr({
                         "original-x": "",
                         "original-y": ""
                     })
@@ -137,8 +159,8 @@ define(["Stapes", "models/state", "views/PortView"], function(Stapes, State, Por
                 });
                 var portViews = this.inPortViews.concat(this.outPortViews);
                 _.forEach(portViews, function(port) {
-                    var x = port.el.attr("original-x");
-                    var y = port.el.attr("original-y");
+                    var x = port.circle.attr("original-x");
+                    var y = port.circle.attr("original-y");
                     var lx = dx + Number(x);
                     var ly = dy + Number(y);
                     port.move(lx, ly);
