@@ -1,4 +1,4 @@
-define(["Stapes", "lodash", "models/port"], function(Stapes, _, Port) {
+define(["Stapes", "lodash", "flow/models/port"], function(Stapes, _, Port) {
     var State = Stapes.subclass({
         constructor: function(def) {
             this.def = def;

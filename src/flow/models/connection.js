@@ -1,4 +1,4 @@
-define(["Stapes", "models/port"], function(Stapes, Port) {
+define(["Stapes", "flow/models/port"], function(Stapes, Port) {
     var Connection = Stapes.subclass({
         constructor: function(fromPort, toPort) {
             if (!(fromPort instanceof Port.OutPort)) {

@@ -1,4 +1,4 @@
-define(["Stapes", "models/state", "views/PortView"], function(Stapes, State, PortView) {
+define(["Stapes", "flow/models/state", "flow/views/PortView"], function(Stapes, State, PortView) {
     var StateView = Stapes.subclass({
         constructor: function(model) {
             if (!(model instanceof State)) {
@@ -54,7 +54,7 @@ define(["Stapes", "models/state", "views/PortView"], function(Stapes, State, Por
             });
 
             var maxRight = 0;
-            _.forEach(this.inPortViews, function(port) {
+            _.forEach(this.outPortViews, function(port) {
                 maxRight = Math.max(maxRight, port.model.def.text.width('Helvetica, sans-serif'));
             });
 
@@ -139,7 +139,7 @@ define(["Stapes", "models/state", "views/PortView"], function(Stapes, State, Por
                 })
             }
             var onDrag = function(dx, dy, x, y) {
-                var rect = this.el.select("rect[data-background=true]")
+                var rect = this.el.select("rect[data-background=true]");
 
                 var ox = Number(rect.attr("original-x"));
                 var oy = Number(rect.attr("original-y"));
@@ -166,12 +166,33 @@ define(["Stapes", "models/state", "views/PortView"], function(Stapes, State, Por
                     port.move(lx, ly);
                 })
             }
-            this.el.select("rect[data-background=true]")
-                .drag(onDrag, onDragStart, onDragEnd, this, this, this);
 
+            var toggleSelect = function() {
+                var rect = this.el.select("rect[data-background=true]");
+                if (!rect.hasClass('selected')) {
+                    this.select();
+                } else {
+                    this.unselect();
+                }
+            }
 
+            var rect = this.el.select("rect[data-background=true]");
+            rect.drag(onDrag, onDragStart, onDragEnd, this, this, this);
+            rect.dblclick(toggleSelect, this);
             //listen to events coming from the port
 
+        },
+        select: function() {
+            var rect = this.el.select("rect[data-background=true]");
+            rect.addClass('selected');
+            this.emit('selected');
+        },
+        unselect: function() {
+            var rect = this.el.select("rect[data-background=true]");
+            if (rect.hasClass("selected")) {
+                rect.removeClass('selected');
+                this.emit('unselected');
+            }
         }
     });
     return StateView;

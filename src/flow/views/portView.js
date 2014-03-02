@@ -1,4 +1,4 @@
-define(["Stapes", "lodash", "models/port", "models/connection"],
+define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
     function(Stapes, _, Port, Connection) {
         var PortView = Stapes.subclass({
             constructor: function() {

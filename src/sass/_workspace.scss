@@ -1,0 +1,60 @@
+// variables
+$font-stack:    Helvetica, sans-serif;
+
+// *
+// * Mixins 
+// * 
+//
+
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: auto;
+}
+
+
+
+.state {
+    stroke: $text-color;
+    stroke-width: $state-line-width;
+    fill: $invalid-color;
+
+}
+
+.port {
+    fill: $port-color;
+    stroke-width: $port-line-width;
+    stroke: $text-color
+}
+
+#dragLine{
+	stroke: $text-color;
+	stroke-width: 2;
+	stroke-dasharray: 3,3;
+}
+
+.connector{
+	stroke: $constant-color;
+	stroke-width: $connector-line-width;
+	fill: none;
+}
+
+#canvas{
+	background-color: $primary-color
+}
+
+.input-text{
+  @include no-select();
+  font-size: xx-small;
+  fill: $embedded-color;
+}
+
+.output-text{
+  @include no-select();
+  font-size: xx-small;
+  fill: $embedded-color;
+}

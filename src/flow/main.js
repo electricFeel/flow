@@ -6,7 +6,8 @@ require.config({
         lodash: '../../bower_components/lodash/dist/lodash',
         Stapes: '../../bower_components/stapes/stapes',
         snap: '../../bower_components/snap.svg/dist/snap.svg',
-        //"snap-zoompan": "plugins/snap-zoompan"
+        'snap-classie': 'plugins/snap-classie',
+        "snap-zoompan": "plugins/snap-zoompan"
     },
     shim: {
         jquery: {
@@ -15,10 +16,14 @@ require.config({
         lodash: {
             exports: "_"
         },
-        /*"snap-zoompan": {
+        "snap-zoompan": {
             depends: ["snap"],
             exports: "snap-zoompan"
-        }*/
+        },
+        'snap-classie': {
+            depends: ["snap"],
+            exports: "snap-classie"
+        }
     }
 });
 
@@ -27,9 +32,11 @@ require(['lodash',
         'views/workspaceView',
         'models/state',
         'models/connection',
-        'jquery'
+        'jquery',
+        'snap-classie'
     ],
     function(_, Snap, WorkspaceView, State, Connection, $) {
+        //used by the stateview
         String.prototype.width = function(font) {
             var f = font || '12px arial',
                 o = $('<div>' + this + '</div>')
@@ -48,6 +55,37 @@ require(['lodash',
 
             return w;
         }
+
+        var body = $('body'),
+            page = body.find('.wrapper'),
+            navToggle = body.find('#nav-toggle'),
+            viewportHt = $(window).innerHeight();
+
+
+
+        navToggle.on('click', function() {
+
+            body
+                .removeClass('loading')
+                .toggleClass('nav-open');
+
+            if (body.hasClass('nav-open')) {
+                page.css('height', viewportHt);
+            } else {
+                page.css('height', 'auto');
+            }
+
+        });
+
+        page.find('[role="main"]').on('click', function(e) {
+            body.removeClass('nav-open');
+            e.preventDefault();
+        });
+
+        page.find('[role="main"]').on('click', function(e) {
+            body.removeClass('nav-open');
+            e.preventDefault();
+        });
 
         window.flow = {};
         //console.log(zoomPan);

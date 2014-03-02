@@ -1,11 +1,12 @@
 define(["Stapes",
         "lodash",
-        "models/state",
-        "models/connection",
-        "collections/stateCollection",
-        "collections/connectionCollection",
-        "views/StateView",
-        "views/ConnectionView"
+        "flow/models/state",
+        "flow/models/connection",
+        "flow/collections/stateCollection",
+        "flow/collections/connectionCollection",
+        "flow/views/StateView",
+        "flow/views/ConnectionView",
+        "snap-zoompan"
     ],
     function(Stapes, _, State, Connection, StateCollection, ConnectionCollection, StateView, ConnectionView) {
         //acts as the main function
@@ -50,8 +51,8 @@ define(["Stapes",
                     var x = Number(dragLine.attr("x1"));
                     var y = Number(dragLine.attr("y1"));
                     dragLine.attr({
-                        "x2": scope.x,
-                        "y2": scope.y
+                        "x2": x + scope.dx,
+                        "y2": y + scope.dy
                     })
                 };
 
@@ -123,6 +124,17 @@ define(["Stapes",
                     portView.on("hoverin", onInPortHoverIn, scope);
                     portView.on("hoverout", onInPortHoverOut, scope);
                 });
+
+                var onSelected = function(scope) {
+                    //todo: draw bounding box
+                    //remove all selected states
+                    var selectedState = this.stateView;
+                    _.forEach(self.stateViews, function(stateView) {
+                        if (stateView !== selectedState) {
+                            stateview.unselect();
+                        }
+                    })
+                }
             },
             onStateRemoved: function(state, that) {
                 //first remove any connections to the ports

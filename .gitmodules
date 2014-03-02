@@ -1,0 +1,3 @@
+[submodule "bottle-flow-server"]
+	path = bottle-flow-server
+	url = https://github.com/electricFeel/bottle-flow-server.git
