@@ -28,7 +28,7 @@ module.exports = function(grunt) {
                     style: 'expanded'
                 },
                 files: {
-                    'src/flow/main.css': 'src/sass/main.scss'
+                    'src/main.css': 'src/sass/main.scss'
                 }
             }
         }

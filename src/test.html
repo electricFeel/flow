@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Jasmine Spec Runner</title>
-  <link href="flow/main.css" rel="stylesheet" type="text/css"></link>
-  <script src="../bower_components/requirejs/require.js" data-main="flow/main.js"></script>
+    <title>Jasmine Spec Runner</title>
+    <link href="flow/main.css" rel="stylesheet" type="text/css"></link>
+    <script src="../bower_components/requirejs/require.js" data-main="main.js"></script>
 </head>
+
 <body>
-<svg id="workspace" height="1000" width="1000"></svg>
+    <div class="wrapper">
+        <button id="nav-toggle" aria-hidden="true">Navigation</button>
+        <div class="inner-wrapper">
+
+            <div class="nav-bg">
+                <nav role="navigation" ng-controller="PaletteCtrl">
+                    <ul>
+                        <!--<li><a href="#">Nav Item</a></li>
+                    <li><a href="#">Nav Item</a></li>
+                    <li><a href="#">Nav Item</a></li>-->
+                        <li ng-repeat="palette in palletes">
+                            <a href="" ng-click="visiblePalette(palette)">{{ palette.DisplayName }}</a>
+                            <ul>
+                                <li ng-repeat="component in palette.components">
+                                    <div class="component">
+                                        <!-- <a href="">{{component.name}}</a> -->
+                                        <component></component>
+                                        <!-- <a href="">
+                                        <svg height="210" width="400" viewbox="0 0 16 16">
+  <path d="{{component.SVGIcon}}" />
+</svg>
+                                        {{component.name}}</a> -->
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="workspace-wrapper" role="main">
+                <svg id="workspace" height="1000" width="1000" flow></svg>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

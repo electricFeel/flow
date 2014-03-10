@@ -1,21 +1,24 @@
 {
-    "name": "flow",
-    "version": "0.0.0",
-    "license": "MIT",
-    "private": true,
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ],
-    "dependencies": {
-        "stapes": "~0.8.1",
-        "requirejs": "~2.1.11",
-        "lodash": "~2.4.1",
-        "jquery": "~2.1.0",
-        "Snap.svg": "latest",
-        "jasmine-jquery": "~1.7.0"
-    }
+  "name": "flow",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "stapes": "~0.8.1",
+    "requirejs": "~2.1.11",
+    "lodash": "~2.4.1",
+    "jquery": "~2.1.0",
+    "Snap.svg": "latest",
+    "jasmine-jquery": "~1.7.0",
+    "classie": "~1.0.0",
+    "angular": "~1.2.13",
+    "angular-resource": "~1.2.13"
+  }
 }

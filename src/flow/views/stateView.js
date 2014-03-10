@@ -1,9 +1,16 @@
 define(["Stapes", "flow/models/state", "flow/views/PortView"], function(Stapes, State, PortView) {
     var StateView = Stapes.subclass({
-        constructor: function(model) {
+        constructor: function(model, viewOnly) {
             if (!(model instanceof State)) {
                 throw new Error("StateView must have an instance of State to bind to in the constructor");
             }
+
+            if (viewOnly) {
+                this.viewOnly = viewOnly;
+            } else {
+                viewOnly = false;
+            }
+
             this.model = model;
             this._guid = model._guid;
             this.viewMode = "collapsed";
@@ -91,7 +98,9 @@ define(["Stapes", "flow/models/state", "flow/views/PortView"], function(Stapes, 
             this.populatePortViews(renderer, x, y, this.inPortViews, inPortGroup);
             this.el.add(inPortGroup);
             this.el.add(outPortGroup);
-            this.attachEvents();
+            if (!viewOnly) {
+                this.attachEvents();
+            }
         },
         populatePortViews: function(renderer, xPosition, yPosition, portViews, group) {
             if (portViews.length <= 0) {

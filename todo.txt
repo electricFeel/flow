@@ -1,3 +1,9 @@
+Must haves:
 1) Finish the rendering specs
-3) Add effects to views (DONT MAINTAIN ANY POSITION INFORMATION OUTSIDE OF THE DOM)
-4) Add zoom and pan support to the SVG
+3) Spec out a collapsed and expanded "State View"
+4) Set up an SVG icon for the "State View" visible in both
+   collapsed and expanded states
+5) Add hover effects 
+
+Nice to haves:
+1)Add zoom and pan support to the SVG

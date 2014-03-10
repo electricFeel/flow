@@ -1,8 +1,12 @@
 define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
     function(Stapes, _, Port, Connection) {
         var PortView = Stapes.subclass({
-            constructor: function() {
-
+            constructor: function(viewOnly) {
+                if (viewOnly) {
+                    this.viewOnly = viewOnly;
+                } else {
+                    viewOnly = false;
+                }
             },
             render: function(renderer, xPosition, yPosition) {
                 //add guid to dom element
@@ -22,7 +26,9 @@ define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
                 });
                 this.el.data("view", this);
                 this.el.add(this.circle);
-                this.attachEvents();
+                if (!viewOnly) {
+                    this.attachEvents();
+                }
                 this.renderText(renderer);
             },
             attachEvents: function() {},
