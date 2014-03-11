@@ -1,11 +1,15 @@
 define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
     function(Stapes, _, Port, Connection) {
         var PortView = Stapes.subclass({
-            constructor: function(viewOnly) {
+            constructor: function(viewOnly, portObserver) {
                 if (viewOnly) {
                     this.viewOnly = viewOnly;
                 } else {
                     this.viewOnly = false;
+                }
+
+                if (portObserver) {
+                    this.portObserver = portObserver;
                 }
             },
             render: function(renderer, xPosition, yPosition) {
@@ -30,8 +34,18 @@ define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
                     this.attachEvents();
                 }
                 this.renderText(renderer);
+
+                //an observer raises events to the front end
+                if (this.portObserver) {
+                    this.attachObserver;
+                }
             },
             attachEvents: function() {},
+            attachObserver: function() {
+                this.circle.click(function() {
+                    this.observer.clicked();
+                });
+            },
             move: function(xPosition, yPosition) {
                 this.circle.attr({
                     "cx": xPosition,
