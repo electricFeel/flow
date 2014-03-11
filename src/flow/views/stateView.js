@@ -1,6 +1,6 @@
 define(["Stapes", "flow/models/state", "flow/views/PortView"], function(Stapes, State, PortView) {
     var StateView = Stapes.subclass({
-        constructor: function(model, viewOnly) {
+        constructor: function(model, viewOnly, stateObserver, portObserver) {
             if (!(model instanceof State)) {
                 throw new Error("StateView must have an instance of State to bind to in the constructor");
             }
