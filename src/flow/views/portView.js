@@ -5,7 +5,7 @@ define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
                 if (viewOnly) {
                     this.viewOnly = viewOnly;
                 } else {
-                    viewOnly = false;
+                    this.viewOnly = false;
                 }
             },
             render: function(renderer, xPosition, yPosition) {
@@ -26,7 +26,7 @@ define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
                 });
                 this.el.data("view", this);
                 this.el.add(this.circle);
-                if (!viewOnly) {
+                if (!this.viewOnly) {
                     this.attachEvents();
                 }
                 this.renderText(renderer);
