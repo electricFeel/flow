@@ -8,7 +8,7 @@ define(["Stapes", "flow/models/state", "flow/views/PortView"], function(Stapes, 
             if (viewOnly) {
                 this.viewOnly = viewOnly;
             } else {
-                viewOnly = false;
+                this.viewOnly = false;
             }
 
             this.model = model;
@@ -98,7 +98,7 @@ define(["Stapes", "flow/models/state", "flow/views/PortView"], function(Stapes, 
             this.populatePortViews(renderer, x, y, this.inPortViews, inPortGroup);
             this.el.add(inPortGroup);
             this.el.add(outPortGroup);
-            if (!viewOnly) {
+            if (!this.viewOnly) {
                 this.attachEvents();
             }
         },
