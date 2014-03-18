@@ -19,13 +19,13 @@ define(["Stapes", "flow/models/state", "flow/views/PortView"], function(Stapes, 
             var self = this;
             self.inPortViews = [];
             _.forEach(this.model.inPorts, function(port) {
-                var inPort = new PortView.InPortView(port);
+                var inPort = new PortView.InPortView(port, portObserver);
                 self.inPortViews.push(inPort);
             });
 
             self.outPortViews = [];
             _.forEach(this.model.outPorts, function(port) {
-                var outPort = new PortView.OutPortView(port);
+                var outPort = new PortView.OutPortView(port, portObserver);
                 self.outPortViews.push(outPort);
             });
         },
