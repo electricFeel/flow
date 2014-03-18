@@ -9,11 +9,13 @@ define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
                 }
 
                 if (portObserver) {
+                    console.log(portObserver);
                     this.portObserver = portObserver;
                 }
             },
             render: function(renderer, xPosition, yPosition) {
                 //add guid to dom element
+                console.log("port rendering");
                 if (!this.el) {
                     this.constructElement(renderer, xPosition, yPosition);
                 }
@@ -37,13 +39,15 @@ define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
 
                 //an observer raises events to the front end
                 if (this.portObserver) {
-                    this.attachObserver;
+                    this.attachObserver();
                 }
             },
             attachEvents: function() {},
             attachObserver: function() {
-                this.circle.click(function() {
-                    this.observer.clicked();
+                console.log("attaching observers");
+                var that = this;
+                that.circle.click(function(ctx) {
+                    that.portObserver.clicked(that.model.def);
                 });
             },
             move: function(xPosition, yPosition) {
@@ -60,6 +64,7 @@ define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
                 if (!(model instanceof Port.InPort)) {
                     throw new Error("InPortView must have a InPort object to bind to");
                 }
+                PortView.prototype.constructor.apply(this, arguments);
                 this.model = model;
                 this.radius = this.model.radius || 5;
                 //todo bind to model events
@@ -112,6 +117,7 @@ define(["Stapes", "lodash", "flow/models/port", "flow/models/connection"],
                 if (!(model instanceof Port.OutPort)) {
                     throw new Error("InPortView must have a InPort object to bind to");
                 }
+                PortView.prototype.constructor.apply(this, arguments);
                 this.model = model;
                 this.radius = this.model.radius || 5;
                 //todo bind to model events
